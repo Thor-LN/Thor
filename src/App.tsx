@@ -9,7 +9,6 @@
  */
 
 import React from 'react';
-import {Provider as PaperProvider, Text} from 'react-native-paper';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import {useFlipper} from '@react-navigation/devtools';
@@ -17,12 +16,12 @@ import {
   NavigationContainer,
   useNavigationContainerRef,
 } from '@react-navigation/native';
+import {NativeBaseProvider} from 'native-base';
 import {SWRConfig} from 'swr';
 
-import Body from './components/Body/Body';
-import SafeAreaView from './components/SafeAreaView/SafeAreaView';
 import {useSwrConfig} from './hooks/api/useSwrConfig';
 import ThemeProvider from './providers/ThemeProvider';
+import Routes from './routes/Routes';
 
 const App = () => {
   const swrConfig = useSwrConfig();
@@ -36,15 +35,11 @@ const App = () => {
       {({theme}) => (
         <SWRConfig value={swrConfig}>
           <SafeAreaProvider>
-            <PaperProvider theme={theme}>
+            <NativeBaseProvider theme={theme}>
               <NavigationContainer ref={navigationRef} theme={theme}>
-                <SafeAreaView>
-                  <Body>
-                    <Text>It works</Text>
-                  </Body>
-                </SafeAreaView>
+                <Routes />
               </NavigationContainer>
-            </PaperProvider>
+            </NativeBaseProvider>
           </SafeAreaProvider>
         </SWRConfig>
       )}

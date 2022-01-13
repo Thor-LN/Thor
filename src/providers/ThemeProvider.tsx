@@ -7,32 +7,29 @@ import React, {
 } from 'react';
 
 import {Theme} from '@react-navigation/native';
+import {ITheme} from 'native-base';
 
-import {CombinedDarkTheme, CombinedDefaultTheme} from '../styles/theme';
+import {DefaultTheme} from '../styles/theme';
 
 interface ThemeProviderContextInterface {
   toggleTheme: () => void;
-  theme: ReactNativePaper.Theme & Theme;
+  theme: ITheme & Theme;
 }
 
 interface ThemeProviderProps {
-  children: ({
-    theme,
-  }: {
-    theme: ReactNativePaper.Theme & Theme;
-  }) => React.ReactNode;
+  children: ({theme}: {theme: ITheme & Theme}) => React.ReactNode;
 }
 
 const ThemeProviderContext = createContext<ThemeProviderContextInterface>({
   toggleTheme: () => {},
-  theme: CombinedDefaultTheme,
+  theme: DefaultTheme,
 });
 
 const ThemeProvider = ({children}: ThemeProviderProps) => {
   const [isThemeDark, setIsThemeDark] = useState(false);
 
-  const theme = useMemo<ReactNativePaper.Theme & Theme>(
-    () => (isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme),
+  const theme = useMemo<ITheme & Theme>(
+    () => (isThemeDark ? DefaultTheme : DefaultTheme),
     [isThemeDark],
   );
 

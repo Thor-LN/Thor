@@ -22,6 +22,7 @@ import {SWRConfig} from 'swr';
 import {useSwrConfig} from './hooks/api/useSwrConfig';
 import ThemeProvider from './providers/ThemeProvider';
 import Routes from './routes/Routes';
+import './i18n.config';
 
 const App = () => {
   const swrConfig = useSwrConfig();

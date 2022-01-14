@@ -17,11 +17,13 @@ import {
   useNavigationContainerRef,
 } from '@react-navigation/native';
 import {NativeBaseProvider} from 'native-base';
+import FlipperAsyncStorage from 'rn-flipper-async-storage-advanced';
 import {SWRConfig} from 'swr';
 
 import {useSwrConfig} from './hooks/api/useSwrConfig';
 import ThemeProvider from './providers/ThemeProvider';
 import Routes from './routes/Routes';
+
 import './i18n.config';
 
 const App = () => {
@@ -32,19 +34,22 @@ const App = () => {
   useFlipper(navigationRef);
 
   return (
-    <ThemeProvider>
-      {({theme}) => (
-        <SWRConfig value={swrConfig}>
-          <SafeAreaProvider>
-            <NativeBaseProvider theme={theme}>
-              <NavigationContainer ref={navigationRef} theme={theme}>
-                <Routes />
-              </NavigationContainer>
-            </NativeBaseProvider>
-          </SafeAreaProvider>
-        </SWRConfig>
-      )}
-    </ThemeProvider>
+    <>
+      <FlipperAsyncStorage />
+      <ThemeProvider>
+        {({theme}) => (
+          <SWRConfig value={swrConfig}>
+            <SafeAreaProvider>
+              <NativeBaseProvider theme={theme}>
+                <NavigationContainer ref={navigationRef} theme={theme}>
+                  <Routes />
+                </NavigationContainer>
+              </NativeBaseProvider>
+            </SafeAreaProvider>
+          </SWRConfig>
+        )}
+      </ThemeProvider>
+    </>
   );
 };
 export default App;

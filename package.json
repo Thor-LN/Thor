@@ -29,6 +29,7 @@
     "react": "17.0.2",
     "react-i18next": "^11.15.3",
     "react-native": "0.66.4",
+    "react-native-animated-pagination-dot": "^0.3.0",
     "react-native-appstate-hook": "^1.0.6",
     "react-native-localize": "^2.1.7",
     "react-native-safe-area-context": "^3.3.2",
@@ -36,6 +37,7 @@
     "react-native-svg": "^12.1.1",
     "react-native-tor": "^0.1.7",
     "react-native-vector-icons": "^9.0.0",
+    "rn-flipper-async-storage-advanced": "^1.0.4",
     "swr": "^1.1.2"
   },
   "devDependencies": {

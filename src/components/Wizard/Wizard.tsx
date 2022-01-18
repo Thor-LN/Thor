@@ -28,6 +28,7 @@ const Wizard = <Values, Response extends Record<string, unknown>>(
     onSubmit,
     nextButton,
     previousButton,
+    finishButton,
     controlProps,
     customControl,
     disableControls,
@@ -96,18 +97,22 @@ const Wizard = <Values, Response extends Record<string, unknown>>(
       values: Values,
       bag: FormikHelpers<Values>,
     ): Promise<void | Response> => {
-      if (!React.isValidElement(step)) {
-        return;
-      }
+      try {
+        if (!React.isValidElement(step)) {
+          return;
+        }
 
-      if (step.props?.onSubmit) {
-        await step.props.onSubmit(values, bag);
-      }
-      if (isLastStep) {
-        return onSubmit(values, bag);
-      } else {
-        bag.setTouched({});
-        next(values);
+        if (step.props?.onSubmit) {
+          await step.props.onSubmit(values, bag);
+        }
+        if (isLastStep) {
+          return onSubmit(values, bag);
+        } else {
+          bag.setTouched({});
+          next(values);
+        }
+      } catch (e) {
+        console.log(e);
       }
     },
     [isLastStep, next, onSubmit, step],
@@ -149,6 +154,7 @@ const Wizard = <Values, Response extends Record<string, unknown>>(
           nextButton={step.props.nextButton || nextButton}
           isLastStep={isLastStep}
           hasBackButton={controlProps?.hasBackButton}
+          finishButton={finishButton}
         />
       );
     },
@@ -156,6 +162,7 @@ const Wizard = <Values, Response extends Record<string, unknown>>(
       controlProps?.hasBackButton,
       customControl,
       disableControls,
+      finishButton,
       isLastStep,
       nextButton,
       previous,

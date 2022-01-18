@@ -16,7 +16,7 @@ import {
   NavigationContainer,
   useNavigationContainerRef,
 } from '@react-navigation/native';
-import {NativeBaseProvider} from 'native-base';
+import {NativeBaseProvider, StatusBar} from 'native-base';
 import FlipperAsyncStorage from 'rn-flipper-async-storage-advanced';
 import {SWRConfig} from 'swr';
 
@@ -41,6 +41,7 @@ const App = () => {
           <SWRConfig value={swrConfig}>
             <SafeAreaProvider>
               <NativeBaseProvider theme={theme}>
+                <StatusBar translucent barStyle="light-content" />
                 <NavigationContainer ref={navigationRef} theme={theme}>
                   <Routes />
                 </NavigationContainer>

@@ -1,5 +1,5 @@
-import Lnd from '../backends/Lnd';
-import {store} from '../store/Store';
+import Lnd from '@/backends/Lnd';
+import {store} from '@/store/Store';
 
 class RESTUtils {
   lnd: Lnd;

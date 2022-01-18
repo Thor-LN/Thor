@@ -14,6 +14,7 @@ export interface WizardProps<Values, Response> {
   ) => void | Promise<Response> | Promise<void>;
   nextButton?: string;
   previousButton?: string;
+  finishButton?: string;
   controlProps?: WizardControlProps;
   customControl?: ({
     previous,
@@ -68,5 +69,5 @@ export interface ControlsProps extends WizardControlProps {
   previousButton: string | ReactNode;
   nextButton: string;
   isLastStep: boolean;
-  finishLabel?: string;
+  finishButton?: string;
 }

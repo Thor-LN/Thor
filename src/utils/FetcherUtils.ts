@@ -1,6 +1,7 @@
-import HTTPService from '../services/HTTPService';
-import tor from '../services/tor';
-import {store} from '../store/Store';
+import HTTPService from '@/services/HTTPService';
+import tor from '@/services/tor';
+import {store} from '@/store/Store';
+
 import restUtils from './RESTUtils';
 
 class FetcherUtils {

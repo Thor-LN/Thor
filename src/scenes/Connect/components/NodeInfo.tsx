@@ -1,9 +1,8 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
+import Lightning from '@/assets/svg/lightning.svg';
 import {Heading, VStack} from 'native-base';
-
-import Lightning from '../../../assets/svg/lightning.svg';
 
 const NodeInfo = () => {
   const {t} = useTranslation();

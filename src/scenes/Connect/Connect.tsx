@@ -1,12 +1,15 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useRef} from 'react';
+import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 
-import {Box, Center} from 'native-base';
+import {setStorage} from '@/actions/storageActions';
+import {Wizard, WizardStep} from '@/components/Wizard';
+import ConnectionSuccess from '@/scenes/Connect/components/ConnectionSuccess';
+import lndConnectUtils from '@/utils/LNDConnectUtils';
+import restUtils from '@/utils/RESTUtils';
+import {FormikProps} from 'formik';
+import {Box, Center, useToast} from 'native-base';
 
-import {setStorage} from '../../actions/storageActions';
-import {Wizard, WizardStep} from '../../components/Wizard';
-import lndConnectUtils from '../../utils/LNDConnectUtils';
-import restUtils from '../../utils/RESTUtils';
 import CreateConnection from './components/CreateConnection';
 import NodeInfo from './components/NodeInfo';
 import Welcome from './components/Welcome';
@@ -18,7 +21,10 @@ const initialValues: ConnectProps = {
 };
 
 const Connect = () => {
+  const {t} = useTranslation();
   const dispatch = useDispatch();
+  const {show} = useToast();
+  const formRef = useRef<FormikProps<ConnectProps>>(null);
 
   const handleNodeConnection = useCallback(
     async (values: ConnectProps) => {
@@ -27,30 +33,63 @@ const Connect = () => {
         const {host, port, macaroonHex, enableTor} =
           lndConnectUtils.processLndConnectUrl(urlString);
 
-        dispatch(setStorage({tor: enableTor, host, port, macaroonHex}));
+        dispatch(
+          setStorage({
+            tor: enableTor,
+            host,
+            port,
+            macaroonHex,
+            implementation: 'lnd',
+          }),
+        );
 
         await restUtils.testConnection();
       } catch (e) {
-        console.log(e);
+        dispatch(
+          setStorage({
+            tor: undefined,
+            host: undefined,
+            port: undefined,
+            macaroonHex: undefined,
+          }),
+        );
+        show({
+          title: t("We couldn't connect to your node. Let's try again?"),
+          status: 'error',
+        });
+        if (formRef.current) {
+          formRef.current.setFieldValue('urlString', '');
+        }
+        throw new Error('Connection error');
       }
     },
-    [dispatch],
+    [dispatch, show, t],
   );
 
   return (
     <Box flex={1}>
       <Center flex={1} px={2}>
-        <Wizard initialValues={initialValues} onSubmit={() => {}}>
+        <Wizard
+          initialValues={initialValues}
+          onSubmit={() => {}}
+          innerRef={formRef}
+          finishButton="Finish setup">
           <WizardStep>
             <Welcome />
           </WizardStep>
+
           <WizardStep>
             <NodeInfo />
           </WizardStep>
+
           <WizardStep
             validationSchema={nodeInfoValidationSchema}
             onSubmit={handleNodeConnection}>
             <CreateConnection />
+          </WizardStep>
+
+          <WizardStep requireIsValid={false}>
+            <ConnectionSuccess />
           </WizardStep>
         </Wizard>
       </Center>

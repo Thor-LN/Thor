@@ -7,5 +7,15 @@ module.exports = {
         globals: ['__scanQRCodes'],
       },
     ],
+    [
+      'module-resolver',
+      {
+        root: ['./src'],
+        extensions: ['.ts', '.tsx', '.jsx', '.js', '.json', '.svg'],
+        alias: {
+          '@': './src',
+        },
+      },
+    ],
   ],
 };

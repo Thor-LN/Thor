@@ -1,9 +1,8 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
+import Thor from '@/assets/svg/thor.svg';
 import {Heading, VStack} from 'native-base';
-
-import Thor from '../../../assets/svg/thor.svg';
 
 const Welcome = () => {
   const {t} = useTranslation();

@@ -1,30 +1,58 @@
-import React from 'react';
-import {useTranslation} from 'react-i18next';
-import PaginationDot from 'react-native-animated-pagination-dot';
+import React, {useCallback} from 'react';
+import {useDispatch} from 'react-redux';
 
-import {Box, Button, Center, Heading, VStack} from 'native-base';
+import {Box, Center} from 'native-base';
 
-import Thor from '../../assets/svg/thor.svg';
+import {setStorage} from '../../actions/storageActions';
+import {Wizard, WizardStep} from '../../components/Wizard';
+import lndConnectUtils from '../../utils/LNDConnectUtils';
+import restUtils from '../../utils/RESTUtils';
+import CreateConnection from './components/CreateConnection';
+import NodeInfo from './components/NodeInfo';
+import Welcome from './components/Welcome';
+import {ConnectProps} from './Connect.props';
+import {nodeInfoValidationSchema} from './validationSchema';
+
+const initialValues: ConnectProps = {
+  urlString: '',
+};
 
 const Connect = () => {
-  const {t} = useTranslation();
+  const dispatch = useDispatch();
+
+  const handleNodeConnection = useCallback(
+    async (values: ConnectProps) => {
+      try {
+        const {urlString} = values;
+        const {host, port, macaroonHex, enableTor} =
+          lndConnectUtils.processLndConnectUrl(urlString);
+
+        dispatch(setStorage({tor: enableTor, host, port, macaroonHex}));
+
+        await restUtils.testConnection();
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    [dispatch],
+  );
 
   return (
     <Box flex={1}>
       <Center flex={1} px={2}>
-        <VStack space={3} alignItems="center">
-          <Thor width={120} height={120} />
-          <Heading>{t('Welcome to Thor')}</Heading>
-          <Heading textAlign="center">
-            {t("Let's get you running in a bit")}
-          </Heading>
-          <PaginationDot activeDotColor="white" curPage={0} maxPage={3} />
-        </VStack>
-      </Center>
-      <Center safeAreaBottom>
-        <Button size="lg" width={200}>
-          {t('Next')}
-        </Button>
+        <Wizard initialValues={initialValues} onSubmit={() => {}}>
+          <WizardStep>
+            <Welcome />
+          </WizardStep>
+          <WizardStep>
+            <NodeInfo />
+          </WizardStep>
+          <WizardStep
+            validationSchema={nodeInfoValidationSchema}
+            onSubmit={handleNodeConnection}>
+            <CreateConnection />
+          </WizardStep>
+        </Wizard>
       </Center>
     </Box>
   );

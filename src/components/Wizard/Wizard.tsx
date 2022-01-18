@@ -6,7 +6,8 @@ import React, {
   useState,
 } from 'react';
 
-import {Form, Formik, FormikHelpers, FormikProps, FormikValues} from 'formik';
+import {Formik, FormikHelpers, FormikProps, FormikValues} from 'formik';
+import {Center} from 'native-base';
 
 import Controls from './Controls';
 import {WizardContextData, WizardProps} from './Wizard.props';
@@ -73,16 +74,6 @@ const Wizard = <Values, Response extends Record<string, unknown>>(
     }
     return false;
   }, [step]);
-
-  const getControlsConfig = React.useCallback(
-    (formik: FormikProps<Values>) => {
-      if (currentStepRequireIsValid && !(formik.isValid && formik.dirty)) {
-        return {disabledNextButton: true};
-      }
-      return {};
-    },
-    [currentStepRequireIsValid],
-  );
 
   const next = useCallback(
     (values: Values) => {
@@ -158,7 +149,6 @@ const Wizard = <Values, Response extends Record<string, unknown>>(
           nextButton={step.props.nextButton || nextButton}
           isLastStep={isLastStep}
           hasBackButton={controlProps?.hasBackButton}
-          {...getControlsConfig(formik)}
         />
       );
     },
@@ -166,7 +156,6 @@ const Wizard = <Values, Response extends Record<string, unknown>>(
       controlProps?.hasBackButton,
       customControl,
       disableControls,
-      getControlsConfig,
       isLastStep,
       nextButton,
       previous,
@@ -195,12 +184,14 @@ const Wizard = <Values, Response extends Record<string, unknown>>(
         validateOnMount={currentStepRequireIsValid}
         innerRef={formRef}>
         {formik => (
-          <Form>
+          <>
             <WizardFormControl innerRef={innerRef} />
-            {step}
-            {stepper}
+            <Center flex={1}>
+              {step}
+              {stepper}
+            </Center>
             {renderControls(formik)}
-          </Form>
+          </>
         )}
       </Formik>
     </WizardContext.Provider>

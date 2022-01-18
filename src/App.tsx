@@ -20,11 +20,11 @@ import {NativeBaseProvider} from 'native-base';
 import FlipperAsyncStorage from 'rn-flipper-async-storage-advanced';
 import {SWRConfig} from 'swr';
 
-import {useSwrConfig} from './hooks/api/useSwrConfig';
+import {useSwrConfig} from './hooks/api/config/useSwrConfig';
 import ThemeProvider from './providers/ThemeProvider';
 import Routes from './routes/Routes';
-
 import './i18n.config';
+import Store from './store/Store';
 
 const App = () => {
   const swrConfig = useSwrConfig();
@@ -34,7 +34,7 @@ const App = () => {
   useFlipper(navigationRef);
 
   return (
-    <>
+    <Store>
       <FlipperAsyncStorage />
       <ThemeProvider>
         {({theme}) => (
@@ -49,7 +49,7 @@ const App = () => {
           </SWRConfig>
         )}
       </ThemeProvider>
-    </>
+    </Store>
   );
 };
 export default App;

@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Button} from 'react-native-paper';
+
+import {Button, Center, VStack} from 'native-base';
 
 import {ControlsProps} from './Wizard.props';
 
@@ -12,41 +12,34 @@ const Controls = (props: ControlsProps) => {
     previousButton,
     nextButton,
     isLastStep,
-    disabledNextButton = false,
     finishLabel,
     hasBackButton = true,
   } = props;
 
   return (
-    <View style={styles.container}>
-      {hasBackButton && stepNumber > 0 && (
-        <Button onPress={() => previous(formik.values)}>
-          {previousButton || 'Back'}
-        </Button>
-      )}
-      {isLastStep ? (
-        <Button
-          loading={formik.isSubmitting}
-          disabled={formik.isSubmitting || disabledNextButton}
-          onPress={formik.handleSubmit}>
-          {finishLabel || 'Submit'}
-        </Button>
-      ) : (
-        <Button
-          loading={formik.isSubmitting}
-          disabled={formik.isSubmitting || disabledNextButton}
-          onPress={formik.handleSubmit}>
-          {nextButton || 'Next'}
-        </Button>
-      )}
-    </View>
+    <Center marginY={4} safeAreaBottom>
+      <VStack space="md">
+        {hasBackButton && stepNumber > 0 && (
+          <Button onPress={() => previous(formik.values)}>
+            {previousButton || 'Back'}
+          </Button>
+        )}
+        {isLastStep ? (
+          <Button
+            disabled={formik.isSubmitting || !formik.isValid}
+            onPress={formik.handleSubmit}>
+            {finishLabel || 'Submit'}
+          </Button>
+        ) : (
+          <Button
+            disabled={formik.isSubmitting || !formik.isValid}
+            onPress={formik.handleSubmit}>
+            {nextButton || 'Next'}
+          </Button>
+        )}
+      </VStack>
+    </Center>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginVertical: 2,
-  },
-});
 
 export default Controls;

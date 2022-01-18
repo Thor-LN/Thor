@@ -3,7 +3,6 @@ import React, {ReactNode} from 'react';
 import {FormikHelpers, FormikProps, FormikValues} from 'formik';
 
 export type WizardControlProps = Partial<{
-  disabledNextButton: boolean;
   hasBackButton: boolean;
 }>;
 

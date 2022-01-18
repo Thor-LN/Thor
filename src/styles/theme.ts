@@ -32,6 +32,11 @@ const Theme: ITheme = extendTheme({
     text: '#ffffff',
   },
   components: {
+    Button: {
+      defaultProps: {
+        minWidth: 200,
+      },
+    },
     Heading: {
       baseStyle: {
         color: '#ffffff',

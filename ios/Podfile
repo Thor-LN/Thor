@@ -6,6 +6,7 @@ platform :ios, '11.1'
 target 'Thor' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  pod 'rn-fetch-blob', :path => '../node_modules/rn-fetch-blob-v2'
 
   config = use_native_modules!
 

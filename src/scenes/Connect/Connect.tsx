@@ -66,6 +66,14 @@ const Connect = () => {
     [dispatch, show, t],
   );
 
+  const handleCompleteSetup = useCallback(() => {
+    dispatch(
+      setStorage({
+        setupCompleted: true,
+      }),
+    );
+  }, [dispatch]);
+
   return (
     <Box flex={1}>
       <Center flex={1} px={2}>
@@ -88,7 +96,7 @@ const Connect = () => {
             <CreateConnection />
           </WizardStep>
 
-          <WizardStep requireIsValid={false}>
+          <WizardStep requireIsValid={false} onSubmit={handleCompleteSetup}>
             <ConnectionSuccess />
           </WizardStep>
         </Wizard>

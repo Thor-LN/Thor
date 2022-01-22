@@ -20,6 +20,7 @@ export const useFormattedCurrency = () => {
           return CurrencyFunc(amount, {
             symbol: 'sats',
             pattern: '# !',
+            precision: 0,
           }).format();
       }
     },

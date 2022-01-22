@@ -3,9 +3,14 @@ import {
   LNDGetBlockchainBalanceResponse,
 } from '@/types/GetBlockchainBalanceResponse';
 import {
+  GetChannelsBalanceTransformation,
+  LNDGetChannelsBalanceResponse,
+} from '@/types/GetChannelsBalanceResponse';
+import {
   GetInfoTransformation,
   LNDGetInfoResponse,
 } from '@/types/GetInfoResponse';
+import Currency from '@/utils/currency';
 import restUtils from '@/utils/RESTUtils';
 
 class ParserUtils {
@@ -23,6 +28,18 @@ class ParserUtils {
           total_balance: data.total_balance,
           confirmed_balance: data.confirmed_balance,
           unconfirmed_balance: data.unconfirmed_balance,
+        };
+    }
+  };
+
+  getChannelsBalance = (
+    data: LNDGetChannelsBalanceResponse,
+  ): GetChannelsBalanceTransformation => {
+    switch (this.implementation) {
+      default:
+        return {
+          localBalance: Currency(data.local_balance.sat).value,
+          remoteBalance: Currency(data.remote_balance.sat).value,
         };
     }
   };

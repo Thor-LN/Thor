@@ -1,18 +1,18 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
+import {StyleSheet} from 'react-native';
 import {G} from 'react-native-svg';
 
 import {useFormattedCurrency} from '@/hooks/useFormattedCurrency';
 import {startCase} from 'lodash';
+import {Text, View} from 'native-base';
 import {VictoryPie, VictoryTooltip} from 'victory-native';
 
 interface BalanceChartProps {
   confirmedBalance?: number | string;
   pendingBalance?: number | string;
   localBalance?: number | string;
-  remoteBalance?: number | string;
   pendingLocalBalance?: number | string;
-  pendingRemoteBalance?: number | string;
 }
 
 const ChartLabels = (props: any) => {
@@ -29,6 +29,7 @@ const ChartLabels = (props: any) => {
     <G>
       <VictoryTooltip
         {...props}
+        renderInPortal={false}
         x={195}
         y={240}
         orientation="top"
@@ -41,7 +42,10 @@ const ChartLabels = (props: any) => {
 
 const BalanceChart = (props: BalanceChartProps) => {
   const {t} = useTranslation();
+
   const formattedCurrency = useFormattedCurrency();
+
+  const [showInitialLabel, setShowInitialLabel] = useState(true);
 
   const data = useMemo(() => {
     const arr = Object.entries(props);
@@ -59,33 +63,62 @@ const BalanceChart = (props: BalanceChartProps) => {
     [formattedCurrency],
   );
 
+  const handleEventClick = useCallback((labelProps: any) => {
+    setShowInitialLabel(false);
+    return {
+      active: !labelProps.active,
+    };
+  }, []);
+
   return (
-    <VictoryPie
-      style={{labels: {fill: 'white'}}}
-      innerRadius={100}
-      data={data}
-      colorScale={['tomato', 'orange', 'gold', 'cyan', 'navy']}
-      labelComponent={<ChartLabels />}
-      labels={labels}
-      events={[
-        {
-          target: 'data',
-          eventHandlers: {
-            onPress: () => {
-              return [
-                {
-                  target: 'labels',
-                  mutation: (labelProps: any) => ({
-                    active: !labelProps.active,
-                  }),
-                },
-              ];
+    <View>
+      {showInitialLabel && (
+        <View style={styles.initialLabel}>
+          <Text>{t('Balances')}</Text>
+        </View>
+      )}
+      <VictoryPie
+        style={{labels: {fill: 'white'}}}
+        innerRadius={100}
+        data={data}
+        colorScale={['tomato', 'orange', 'gold', 'cyan', 'navy']}
+        labelComponent={<ChartLabels />}
+        labels={labels}
+        events={[
+          {
+            target: 'data',
+            eventHandlers: {
+              onPress: () => {
+                return [
+                  {
+                    target: 'labels',
+                    eventKey: 'all',
+                    mutation: () => ({active: false}),
+                  },
+                  {
+                    target: 'labels',
+                    mutation: handleEventClick,
+                  },
+                ];
+              },
             },
           },
-        },
-      ]}
-    />
+        ]}
+      />
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  initialLabel: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default BalanceChart;

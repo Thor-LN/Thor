@@ -33,8 +33,9 @@ class RESTUtils {
     }
   };
 
-  getInfo = () => this.getClass().getInfo();
   getBlockchainBalance = () => this.getClass().getBlockchainBalance();
+  getChannelsBalance = () => this.getClass().getChannelsBalance();
+  getInfo = () => this.getClass().getInfo();
 
   testConnection = () => this.getClass().testConnection();
 }

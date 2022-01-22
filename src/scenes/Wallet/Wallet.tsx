@@ -1,21 +1,30 @@
 import React from 'react';
-import {useTranslation} from 'react-i18next';
 
+import {Currency} from '@/components/Currency';
 import {Loading} from '@/components/Loading';
+import {useGetBlockchainBalance} from '@/hooks/api/useGetBlockchainBalance';
 import {useGetInfo} from '@/hooks/api/useGetInfo';
+import BalanceChart from '@/scenes/Wallet/components/BalanceChart';
 import {Center, Heading} from 'native-base';
 
 const Wallet = () => {
   const {data: getInfo} = useGetInfo();
-  const {t} = useTranslation();
+  const {data: blockchainBalance} = useGetBlockchainBalance();
 
   if (!getInfo) {
-    return <Loading />;
+    return <Loading full />;
   }
 
   return (
-    <Center px={2}>
-      <Heading>{t('Connected to {{alias}}', {alias: getInfo.alias})}</Heading>
+    <Center px={2} flex={1}>
+      <BalanceChart
+        confirmedBalance={blockchainBalance?.confirmed_balance}
+        pendingBalance={blockchainBalance?.unconfirmed_balance}
+      />
+      <Currency
+        amount={blockchainBalance?.total_balance || 0}
+        component={<Heading />}
+      />
     </Center>
   );
 };

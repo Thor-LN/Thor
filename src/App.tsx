@@ -9,6 +9,7 @@
  */
 
 import React from 'react';
+import {Platform, UIManager} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import {useFlipper} from '@react-navigation/devtools';
@@ -16,6 +17,8 @@ import {
   NavigationContainer,
   useNavigationContainerRef,
 } from '@react-navigation/native';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 import {NativeBaseProvider, StatusBar} from 'native-base';
 import FlipperAsyncStorage from 'rn-flipper-async-storage-advanced';
 import {SWRConfig} from 'swr';
@@ -25,6 +28,15 @@ import ThemeProvider from './providers/ThemeProvider';
 import Routes from './routes/Routes';
 import './i18n.config';
 import Store from './store/Store';
+
+if (Platform.OS === 'android') {
+  if (UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+}
+
+// initialize localized format
+dayjs.extend(localizedFormat);
 
 const App = () => {
   const swrConfig = useSwrConfig();

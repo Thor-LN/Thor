@@ -118,6 +118,23 @@ const Wizard = <Values, Response extends Record<string, unknown>>(
     [isLastStep, next, onSubmit, step],
   );
 
+  const getControlsConfig = React.useCallback(
+    (formik: FormikProps<Values>) => {
+      if (!React.isValidElement(step)) {
+        return null;
+      }
+
+      if (!step.props.validationSchema) {
+        return {disableNextButton: false};
+      }
+      if (currentStepRequireIsValid && !(formik.isValid && formik.dirty)) {
+        return {disableNextButton: true};
+      }
+      return {};
+    },
+    [currentStepRequireIsValid, step],
+  );
+
   const renderControls = useCallback(
     (formik: FormikProps<Values>) => {
       if (!React.isValidElement(step)) {
@@ -155,6 +172,7 @@ const Wizard = <Values, Response extends Record<string, unknown>>(
           isLastStep={isLastStep}
           hasBackButton={controlProps?.hasBackButton}
           finishButton={finishButton}
+          {...getControlsConfig(formik)}
         />
       );
     },
@@ -163,6 +181,7 @@ const Wizard = <Values, Response extends Record<string, unknown>>(
       customControl,
       disableControls,
       finishButton,
+      getControlsConfig,
       isLastStep,
       nextButton,
       previous,

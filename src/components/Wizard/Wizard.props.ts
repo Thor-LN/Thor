@@ -4,6 +4,7 @@ import {FormikHelpers, FormikProps, FormikValues} from 'formik';
 
 export type WizardControlProps = Partial<{
   hasBackButton: boolean;
+  disableNextButton: boolean;
 }>;
 
 export interface WizardProps<Values, Response> {

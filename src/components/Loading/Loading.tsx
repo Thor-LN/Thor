@@ -2,11 +2,15 @@ import React from 'react';
 
 import {Center, ISpinnerProps, Spinner} from 'native-base';
 
-const Loading = (props: ISpinnerProps) => {
-  const {size = 'lg', ...rest} = props;
+interface LoadingProps extends ISpinnerProps {
+  full?: boolean;
+}
+
+const Loading = (props: LoadingProps) => {
+  const {size = 'lg', full, ...rest} = props;
 
   return (
-    <Center>
+    <Center flex={full ? 1 : undefined}>
       <Spinner size={size} {...rest} />
     </Center>
   );

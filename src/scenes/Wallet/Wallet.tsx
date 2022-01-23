@@ -1,17 +1,21 @@
 import React, {useCallback} from 'react';
-import {RefreshControl} from 'react-native';
 
 import Chain from '@/assets/svg/chain.svg';
+import Pending from '@/assets/svg/pending.svg';
 import Lightning from '@/assets/svg/thunderbolt.svg';
 import {Currency} from '@/components/Currency';
 import {Loading} from '@/components/Loading';
+import ScrollRefreshView from '@/components/ScrollRefreshView/ScrollRefreshView';
 import {useGetBlockchainBalance} from '@/hooks/api/useGetBlockchainBalance';
 import {useGetChannelsBalance} from '@/hooks/api/useGetChannelsBalance';
 import {useGetInfo} from '@/hooks/api/useGetInfo';
+import {useTheme} from '@/providers/ThemeProvider';
 import BalanceChart from '@/scenes/Wallet/components/BalanceChart';
-import {Center, Heading, HStack, ScrollView, VStack} from 'native-base';
+import {Center, Heading, HStack, VStack} from 'native-base';
 
 const Wallet = () => {
+  const {theme} = useTheme();
+
   const {
     data: getInfo,
     mutate: mutateGetInfo,
@@ -28,7 +32,7 @@ const Wallet = () => {
     isValidating: isValidatingChannelsBalance,
   } = useGetChannelsBalance();
 
-  const refreshScreen = useCallback(async () => {
+  const handleRefreshScreen = useCallback(async () => {
     await Promise.all([
       mutateGetInfo(),
       mutateBlockchainBalance(),
@@ -41,16 +45,16 @@ const Wallet = () => {
     isValidatingBlockchainBalance ||
     isValidatingChannelsBalance;
 
-  if (!getInfo) {
+  if (!getInfo || !blockchainBalance || !channelsBalance) {
     return <Loading full />;
   }
 
   return (
-    <ScrollView
-      contentContainerStyle={{justifyContent: 'center', flexGrow: 1}}
-      refreshControl={
-        <RefreshControl refreshing={isValidating} onRefresh={refreshScreen} />
-      }>
+    <ScrollRefreshView
+      onRefresh={handleRefreshScreen}
+      refreshing={isValidating}
+      flex={1}
+      safeAreaTop>
       <Center px={2} flex={1}>
         <VStack justifyContent="center" alignItems="center" space="md">
           <BalanceChart
@@ -60,7 +64,7 @@ const Wallet = () => {
           />
 
           <HStack alignItems="center" space="md">
-            <Chain height={20} width={20} fill="white" />
+            <Chain height={20} width={20} fill={theme.colors.text} />
             <Currency
               amount={blockchainBalance?.total_balance || 0}
               component={<Heading />}
@@ -68,15 +72,25 @@ const Wallet = () => {
           </HStack>
 
           <HStack alignItems="center" space="md">
-            <Lightning height={20} width={20} fill="white" />
+            <Lightning height={20} width={20} />
             <Currency
               amount={channelsBalance?.localBalance || 0}
               component={<Heading />}
             />
           </HStack>
+
+          {Number(blockchainBalance.unconfirmed_balance) > 0 && (
+            <HStack alignItems="center" space="md">
+              <Pending height={20} width={20} fill={theme.colors.text} />
+              <Currency
+                amount={blockchainBalance.unconfirmed_balance}
+                component={<Heading />}
+              />
+            </HStack>
+          )}
         </VStack>
       </Center>
-    </ScrollView>
+    </ScrollRefreshView>
   );
 };
 

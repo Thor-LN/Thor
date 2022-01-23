@@ -1,17 +1,21 @@
 import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {LayoutAnimation} from 'react-native';
 
+import WalletIcon from '@/assets/svg/wallet.svg';
 import {SplashScreen} from '@/components/SplashScreen';
 import {useCanConnect} from '@/hooks/useCanConnect';
 import {useIsSetupCompleted} from '@/hooks/useIsSetupCompleted';
 import {useTheme} from '@/providers/ThemeProvider';
 import Connecting from '@/scenes/Connecting/Connecting';
 import Wallet from '@/scenes/Wallet/Wallet';
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Connect from '../scenes/Connect/Connect';
 
 const Stack = createNativeStackNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
 const MainNavigator: React.FC = ({children}) => {
   const {theme} = useTheme();
@@ -25,6 +29,9 @@ const MainNavigator: React.FC = ({children}) => {
 };
 
 const Routes = () => {
+  const {t} = useTranslation();
+  const {theme} = useTheme();
+
   const isSetupCompleted = useIsSetupCompleted();
   const canConnect = useCanConnect();
 
@@ -70,13 +77,23 @@ const Routes = () => {
   }
 
   return (
-    <MainNavigator>
-      <Stack.Screen
+    <Tab.Navigator
+      activeColor={theme.colors.pink['500']}
+      inactiveColor={theme.colors.text}
+      barStyle={{
+        backgroundColor: theme.colors.background,
+      }}>
+      <Tab.Screen
         name="Wallet"
         component={Wallet}
-        options={{headerShown: false}}
+        options={{
+          tabBarLabel: t('Wallet'),
+          tabBarIcon: ({color}) => (
+            <WalletIcon height={16} width={16} fill={color} />
+          ),
+        }}
       />
-    </MainNavigator>
+    </Tab.Navigator>
   );
 };
 

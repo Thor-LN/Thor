@@ -5,7 +5,7 @@ import Pending from '@/assets/svg/pending.svg';
 import Lightning from '@/assets/svg/thunderbolt.svg';
 import {Currency} from '@/components/Currency';
 import {Loading} from '@/components/Loading';
-import ScrollRefreshView from '@/components/ScrollRefreshView/ScrollRefreshView';
+import {ScrollRefreshView} from '@/components/ScrollRefreshView';
 import {useGetBlockchainBalance} from '@/hooks/api/useGetBlockchainBalance';
 import {useGetChannelsBalance} from '@/hooks/api/useGetChannelsBalance';
 import {useGetInfo} from '@/hooks/api/useGetInfo';

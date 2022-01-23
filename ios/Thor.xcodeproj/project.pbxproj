@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* ThorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ThorTests.m */; };
+		0809500B1AEFC3DAA135B44D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA918881ACEF8D0C239AD87 /* ExpoModulesProvider.swift */; };
+		0D2F35CFAAD4D2D4C317569D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EBDF093132B3A8136FDE8F /* ExpoModulesProvider.swift */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -30,6 +32,7 @@
 		00E356EE1AD99517003FC87E /* ThorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ThorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* ThorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThorTests.m; sourceTree = "<group>"; };
+		12EBDF093132B3A8136FDE8F /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Thor/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Thor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Thor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Thor/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Thor/AppDelegate.m; sourceTree = "<group>"; };
@@ -44,6 +47,7 @@
 		C0A881CF5CF3F2B244570E2A /* Pods-Thor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Thor.debug.xcconfig"; path = "Target Support Files/Pods-Thor/Pods-Thor.debug.xcconfig"; sourceTree = "<group>"; };
 		D00AAFFCFCFDA5787532823F /* Pods-Thor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Thor.release.xcconfig"; path = "Target Support Files/Pods-Thor/Pods-Thor.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		FDA918881ACEF8D0C239AD87 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Thor-ThorTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		448E79EFE6088E53F9057D6A /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				B320400204CA9F9B12D37F2A /* Thor */,
+				50A9066DC29A5B345E34737F /* ThorTests */,
+			);
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
+		50A9066DC29A5B345E34737F /* ThorTests */ = {
+			isa = PBXGroup;
+			children = (
+				FDA918881ACEF8D0C239AD87 /* ExpoModulesProvider.swift */,
+			);
+			name = ThorTests;
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +144,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				E233CBF5F47BEE60B243DCF8 /* Pods */,
 				E6157EE5A74942DF803F6480 /* Resources */,
+				448E79EFE6088E53F9057D6A /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -136,6 +158,14 @@
 				00E356EE1AD99517003FC87E /* ThorTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B320400204CA9F9B12D37F2A /* Thor */ = {
+			isa = PBXGroup;
+			children = (
+				12EBDF093132B3A8136FDE8F /* ExpoModulesProvider.swift */,
+			);
+			name = Thor;
 			sourceTree = "<group>";
 		};
 		E233CBF5F47BEE60B243DCF8 /* Pods */ = {
@@ -412,6 +442,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E356F31AD99517003FC87E /* ThorTests.m in Sources */,
+				0809500B1AEFC3DAA135B44D /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +452,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				0D2F35CFAAD4D2D4C317569D /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,7 +477,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = ThorTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -469,7 +501,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = ThorTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -587,7 +619,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -646,7 +678,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",

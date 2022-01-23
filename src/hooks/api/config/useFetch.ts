@@ -9,6 +9,7 @@ const useFetch = <T>(
   const fetcher = fetcherUtils.fetcher;
 
   return useSWR<T>(url, fetcher, {
+    refreshInterval: 2 * 60 * 1000,
     ...options,
   });
 };

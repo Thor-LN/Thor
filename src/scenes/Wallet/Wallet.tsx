@@ -16,21 +16,11 @@ import {Center, Heading, HStack, VStack} from 'native-base';
 const Wallet = () => {
   const {theme} = useTheme();
 
-  const {
-    data: getInfo,
-    mutate: mutateGetInfo,
-    isValidating: isValidatingGetInfo,
-  } = useGetInfo();
-  const {
-    data: blockchainBalance,
-    mutate: mutateBlockchainBalance,
-    isValidating: isValidatingBlockchainBalance,
-  } = useGetBlockchainBalance();
-  const {
-    data: channelsBalance,
-    mutate: mutateChannelsBalance,
-    isValidating: isValidatingChannelsBalance,
-  } = useGetChannelsBalance();
+  const {data: getInfo, mutate: mutateGetInfo} = useGetInfo();
+  const {data: blockchainBalance, mutate: mutateBlockchainBalance} =
+    useGetBlockchainBalance();
+  const {data: channelsBalance, mutate: mutateChannelsBalance} =
+    useGetChannelsBalance();
 
   const handleRefreshScreen = useCallback(async () => {
     await Promise.all([
@@ -40,21 +30,12 @@ const Wallet = () => {
     ]);
   }, [mutateBlockchainBalance, mutateChannelsBalance, mutateGetInfo]);
 
-  const isValidating =
-    isValidatingGetInfo ||
-    isValidatingBlockchainBalance ||
-    isValidatingChannelsBalance;
-
   if (!getInfo || !blockchainBalance || !channelsBalance) {
     return <Loading full />;
   }
 
   return (
-    <ScrollRefreshView
-      onRefresh={handleRefreshScreen}
-      refreshing={isValidating}
-      flex={1}
-      safeAreaTop>
+    <ScrollRefreshView onRefresh={handleRefreshScreen} flex={1} safeAreaTop>
       <Center px={2} flex={1}>
         <VStack justifyContent="center" alignItems="center" space="md">
           <BalanceChart

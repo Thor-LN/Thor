@@ -31,58 +31,131 @@ def ensure_temp_keychain(name, password)
 end
 
 platform :ios do
-  lane :closed_beta do
-    keychain_name = TEMP_KEYCHAIN_USER
-    keychain_password = TEMP_KEYCHAIN_PASSWORD
-    ensure_temp_keychain(keychain_name, keychain_password)
+  keychain_name = TEMP_KEYCHAIN_USER
+  keychain_password = TEMP_KEYCHAIN_PASSWORD
+  ensure_temp_keychain(keychain_name, keychain_password)
 
-    api_key = app_store_connect_api_key(
-      key_id: APPLE_KEY_ID,
-      issuer_id: APPLE_ISSUER_ID,
-      key_content: APPLE_KEY_CONTENT,            
-      duration: 1200,            
-      in_house: false
-    )
-    
+  api_key = app_store_connect_api_key(
+        key_id: APPLE_KEY_ID,
+        issuer_id: APPLE_ISSUER_ID,
+        key_content: APPLE_KEY_CONTENT,
+        duration: 1200,
+        in_house: false
+      )
+
+
+
+  lane :build_react_app do
+        setup_ci if ENV['CI']
+
+        increment_build_number(xcodeproj: "Thor.xcodeproj")
+
+        cocoapods(
+            clean_install: true,
+            use_bundle_exec: false
+        )
+
+        match(
+            type: 'appstore',
+            app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
+            git_basic_authorization: GIT_AUTHORIZATION,
+            readonly: true,
+            keychain_name: keychain_name,
+            keychain_password: keychain_password,
+            api_key: api_key
+        )
+
+        gym(
+            configuration: "Release",
+            workspace: "Thor.xcworkspace",
+            scheme: "org.lightning.Thor",
+            output_directory: "./build",
+            export_method: "app-store",
+            export_options: {
+            provisioningProfiles: {
+                DEVELOPER_APP_ID => PROVISIONING_PROFILE_SPECIFIER
+                }
+            }
+        )
+
+        delete_temp_keychain(keychain_name)
+  end
+
+
+
+
+
+  lane :build_debug do
+
     increment_build_number(xcodeproj: "Thor.xcodeproj")
-    
+
     cocoapods(
-      clean_install: true,
-      use_bundle_exec: false
+        clean_install: true,
+        use_bundle_exec: false
     )
 
     match(
-      type: 'appstore',
-      app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
-      git_basic_authorization: GIT_AUTHORIZATION,
-      readonly: true,
-      keychain_name: keychain_name,
-      keychain_password: keychain_password,
-      api_key: api_key
+        type: 'development',
+        app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
+        git_basic_authorization: GIT_AUTHORIZATION,
+        keychain_name: keychain_name,
+        keychain_password: keychain_password,
+        api_key: api_key
     )
 
     gym(
-      configuration: "Release",
-      workspace: "Thor.xcworkspace",
-      scheme: "org.lightning.Thor",
-      export_method: "app-store",
-      export_options: {
-        provisioningProfiles: { 
-            DEVELOPER_APP_ID => PROVISIONING_PROFILE_SPECIFIER
+        configuration: "Debug",
+        workspace: "Thor.xcworkspace",
+        scheme: "org.lightning.Thor",
+        output_directory: "./build",
+        output_name: "Thor-dev.ipa",
+        export_method: "development",
+        export_options: {
+            provisioningProfiles: {
+                DEVELOPER_APP_ID => PROVISIONING_PROFILE_SPECIFIER
+            }
         }
-      }
     )
 
-    pilot(
-      apple_id: "#{DEVELOPER_APP_ID}",
-      app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
-      skip_waiting_for_build_processing: true,
-      skip_submission: true,
-      distribute_external: false,
-      notify_external_testers: false,
-      ipa: "./thor.ipa"
-    )
+  end
+
+
+  lane :install_app_on_device do
+
+    sh("rm", "-rf", "./Payload")
+
+    sh("unzip", "../build/Thor-dev.ipa")
+
+    sh("ios-deploy", "-i", "00008101-0016715E0193001E", "--noninteractive", "--debug", "--bundle", "./Payload/Thor.app")
+
+    sh("rm", "-r", "./Payload")
+
+  end
+
+
+  lane :build_and_install_app_on_device do
+
+    build_debug
+
+    install_app_on_device
 
     delete_temp_keychain(keychain_name)
+
+  end
+
+
+  lane :closed_beta do
+
+    build_react_app
+
+    pilot(
+          apple_id: "#{DEVELOPER_APP_ID}",
+          app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
+          skip_waiting_for_build_processing: true,
+          skip_submission: true,
+          distribute_external: false,
+          notify_external_testers: false,
+          ipa: "./build/Thor.ipa"
+        )
   end
 end

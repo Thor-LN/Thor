@@ -15,6 +15,38 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
+### ios build_react_app
+
+```sh
+[bundle exec] fastlane ios build_react_app
+```
+
+
+
+### ios build_debug
+
+```sh
+[bundle exec] fastlane ios build_debug
+```
+
+
+
+### ios install_app_on_device
+
+```sh
+[bundle exec] fastlane ios install_app_on_device
+```
+
+
+
+### ios build_and_install_app_on_device
+
+```sh
+[bundle exec] fastlane ios build_and_install_app_on_device
+```
+
+
+
 ### ios closed_beta
 
 ```sh

@@ -47,7 +47,8 @@ platform :ios do
     increment_build_number(xcodeproj: "Thor.xcodeproj")
     
     cocoapods(
-      clean_install: true
+      clean_install: true,
+      use_bundle_exec: false
     )
 
     match(

@@ -33,15 +33,17 @@ const Connect = () => {
         const {host, port, macaroonHex, enableTor} =
           lndConnectUtils.processLndConnectUrl(urlString);
 
-        dispatch(
-          setStorage({
-            tor: enableTor,
-            host,
-            port,
-            macaroonHex,
-            implementation: 'lnd',
-          }),
-        );
+        const storage = {
+          tor: enableTor,
+          host,
+          port,
+          macaroonHex,
+          implementation: 'lnd',
+        };
+
+        dispatch(setStorage(storage));
+
+        restUtils.setState(storage);
 
         await restUtils.testConnection();
       } catch (e) {

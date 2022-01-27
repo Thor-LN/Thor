@@ -61,3 +61,4 @@ buck-out/
 
 # Fastlane
 /ios/fastlane/Matchfile
+/ios/fastlane/.env

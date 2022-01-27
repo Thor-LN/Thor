@@ -58,3 +58,6 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# Fastlane
+/ios/fastlane/Matchfile

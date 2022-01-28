@@ -5,6 +5,7 @@ import {useDispatch} from 'react-redux';
 import {setStorage} from '@/actions/storageActions';
 import {Wizard, WizardStep} from '@/components/Wizard';
 import ConnectionSuccess from '@/scenes/Connect/components/ConnectionSuccess';
+import fetcherUtils from '@/utils/FetcherUtils';
 import lndConnectUtils from '@/utils/LNDConnectUtils';
 import restUtils from '@/utils/RESTUtils';
 import {FormikProps} from 'formik';
@@ -44,6 +45,7 @@ const Connect = () => {
         dispatch(setStorage(storage));
 
         restUtils.setState(storage);
+        fetcherUtils.setState(storage, storage.tor);
 
         await restUtils.testConnection();
       } catch (e) {

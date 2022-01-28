@@ -25,7 +25,9 @@ const ConnectionSuccess = () => {
         loop={false}
       />
 
-      <Heading numberOfLines={2}>Connected to {alias}!</Heading>
+      <Heading numberOfLines={2} textAlign="center">
+        Connected to {alias}!
+      </Heading>
     </VStack>
   );
 };

@@ -33,8 +33,8 @@ const Fab = () => {
 
   const handleToggle = useCallback(() => {
     onToggle();
-    rotation.value = withSpring(rotation.value > 0 ? 0 : 180);
-  }, [onToggle, rotation]);
+    rotation.value = withSpring(isOpen ? 0 : 180);
+  }, [isOpen, onToggle, rotation]);
 
   return (
     <Box position="absolute" bottom={20} right={5}>

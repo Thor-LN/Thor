@@ -1,6 +1,7 @@
 import React from 'react';
 
 import success from '@/assets/lottie/success.json';
+import {Input} from '@/components/Input';
 import {Loading} from '@/components/Loading';
 import {useGetInfo} from '@/hooks/api/useGetInfo';
 import {lottieStyle} from '@/styles';
@@ -17,7 +18,7 @@ const ConnectionSuccess = () => {
   const {alias} = nodeInfo;
 
   return (
-    <VStack space="md" justifyContent="center" alignItems="center">
+    <VStack space="md" justifyContent="center" alignItems="center" px={10}>
       <LottieView
         source={success}
         style={lottieStyle(200, 200).container}
@@ -25,7 +26,11 @@ const ConnectionSuccess = () => {
         loop={false}
       />
 
-      <Heading numberOfLines={2}>Connected to {alias}!</Heading>
+      <Heading numberOfLines={2} textAlign="center">
+        Connected to {alias}!
+      </Heading>
+
+      <Input name="walletName" label="Name your wallet" />
     </VStack>
   );
 };

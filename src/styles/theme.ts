@@ -1,4 +1,5 @@
 import {DefaultTheme as NavigationDefaultTheme} from '@react-navigation/native';
+import {Theme as INavigationTheme} from '@react-navigation/native';
 import merge from 'deepmerge';
 import {extendTheme, ITheme} from 'native-base';
 
@@ -42,6 +43,12 @@ const Theme: ITheme = extendTheme({
         color: '#ffffff',
       },
     },
+    Input: {
+      baseStyle: {
+        color: '#ffffff',
+        selectionColor: '#ffffff',
+      },
+    },
     Text: {
       baseStyle: {
         color: '#ffffff',
@@ -50,4 +57,7 @@ const Theme: ITheme = extendTheme({
   },
 });
 
-export const DefaultTheme = merge(NavigationDefaultTheme, Theme);
+export const DefaultTheme: INavigationTheme & ITheme = merge(
+  NavigationDefaultTheme,
+  Theme,
+);

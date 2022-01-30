@@ -28,7 +28,7 @@ class FetcherUtils {
     if (this.useTor) {
       await tor.startIfNotStarted();
 
-      return tor.get(url).then(res => res.json);
+      return tor.get(fetchUrl, headers).then(res => res.json);
     }
 
     return HTTPService.fetch('GET', fetchUrl, headers).then(response =>

@@ -27,13 +27,15 @@ const Controls = (props: ControlsProps) => {
         )}
         {isLastStep ? (
           <Button
-            isDisabled={formik.isSubmitting || disableNextButton}
+            isDisabled={disableNextButton}
+            isLoading={formik.isSubmitting}
             onPress={formik.handleSubmit}>
             {finishButton || 'Submit'}
           </Button>
         ) : (
           <Button
-            isDisabled={formik.isSubmitting || disableNextButton}
+            isDisabled={disableNextButton}
+            isLoading={formik.isSubmitting}
             onPress={formik.handleSubmit}>
             {nextButton || 'Next'}
           </Button>

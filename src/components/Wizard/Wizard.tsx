@@ -127,13 +127,22 @@ const Wizard = <Values, Response extends Record<string, unknown>>(
       if (!step.props.validationSchema) {
         return {disableNextButton: false};
       }
-      if (currentStepRequireIsValid && !(formik.isValid && formik.dirty)) {
+      if (currentStepRequireIsValid && !formik.isValid) {
         return {disableNextButton: true};
       }
       return {};
     },
     [currentStepRequireIsValid, step],
   );
+
+  const context = useMemo(
+    () => ({
+      previous,
+      stepNumber,
+      isLastStep,
+    }),
+    [isLastStep, previous, stepNumber],
+  ) as WizardContextData;
 
   const renderControls = useCallback(
     (formik: FormikProps<Values>) => {
@@ -195,19 +204,12 @@ const Wizard = <Values, Response extends Record<string, unknown>>(
     return null;
   }
 
-  const context = {
-    previous,
-    stepNumber,
-    isLastStep,
-  } as WizardContextData;
-
   return (
     <WizardContext.Provider value={context}>
       <Formik
         initialValues={snapshot}
         onSubmit={handleSubmit}
         validationSchema={step.props?.validationSchema}
-        validateOnMount={currentStepRequireIsValid}
         innerRef={formRef}>
         {formik => (
           <>

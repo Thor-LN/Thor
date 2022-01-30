@@ -48,7 +48,6 @@ const QRReader = () => {
   const handleChangeQrCode = useCallback(
     async (qrCodes: QrCode[]) => {
       const code = qrCodes[0]?.displayValue;
-      setFieldValue('urlString', code);
 
       const isValid = await urlStringTest.isValid(code);
 
@@ -57,7 +56,10 @@ const QRReader = () => {
           title: t('It appears the URL you scanned is not valid'),
           status: 'error',
         });
+        return;
       }
+
+      setFieldValue('urlString', code);
     },
     [setFieldValue, show, t],
   );

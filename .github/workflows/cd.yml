@@ -22,6 +22,12 @@ jobs:
         with:
           ruby-version: '3.1.0'
 
+      - name: Install dependencies
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+        run: yarn install
+
       - name: Deploy iOS Beta to TestFlight via Fastlane
         uses: maierj/fastlane-action@v2.1.0
         with:

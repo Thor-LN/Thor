@@ -2,6 +2,7 @@ import React, {useCallback, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 
+import {addWallet} from '@/actions/preferencesActions';
 import {setStorage} from '@/actions/storageActions';
 import {Wizard, WizardStep} from '@/components/Wizard';
 import ConnectionSuccess from '@/scenes/Connect/components/ConnectionSuccess';
@@ -19,6 +20,7 @@ import {nodeInfoValidationSchema} from './validationSchema';
 
 const initialValues: ConnectProps = {
   urlString: '',
+  walletName: '',
 };
 
 const Connect = () => {
@@ -70,13 +72,32 @@ const Connect = () => {
     [dispatch, show, t],
   );
 
-  const handleCompleteSetup = useCallback(() => {
-    dispatch(
-      setStorage({
-        setupCompleted: true,
-      }),
-    );
-  }, [dispatch]);
+  const handleCompleteSetup = useCallback(
+    (values: ConnectProps) => {
+      const {urlString, walletName} = values;
+      const {host, port, macaroonHex, enableTor} =
+        lndConnectUtils.processLndConnectUrl(urlString);
+
+      // save wallet
+      dispatch(
+        addWallet({
+          name: walletName || `${host}:${port}`,
+          host,
+          port,
+          macaroonHex,
+          implementation: 'lnd',
+          tor: enableTor,
+        }),
+      );
+
+      dispatch(
+        setStorage({
+          setupCompleted: true,
+        }),
+      );
+    },
+    [dispatch],
+  );
 
   return (
     <Box flex={1}>

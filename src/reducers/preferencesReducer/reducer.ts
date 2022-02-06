@@ -10,6 +10,9 @@ const initialState: PreferencesState = {
   unit: Units.sats,
   fiat: 'usd',
   wallets: [],
+  generalSettings: {
+    faceId: false,
+  },
 };
 
 export const preferencesReducer = (
@@ -31,6 +34,15 @@ export const preferencesReducer = (
       return {
         ...state,
         wallets: walletsArr,
+      };
+
+    case PreferencesTypes.CHANGE_GENERAL_SETTINGS:
+      return {
+        ...state,
+        generalSettings: {
+          ...state.generalSettings,
+          ...action.generalSettings,
+        },
       };
     default:
       return state;

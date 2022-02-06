@@ -14,6 +14,8 @@ PODS:
     - ExpoModulesCore
   - EXKeepAwake (10.0.1):
     - ExpoModulesCore
+  - EXLocalAuthentication (12.1.1):
+    - ExpoModulesCore
   - Expo (44.0.5):
     - ExpoModulesCore
   - ExpoModulesCore (0.6.4):
@@ -429,6 +431,8 @@ PODS:
     - React-Core
   - RNCClipboard (1.8.5):
     - React-Core
+  - RNKeychain (8.0.0):
+    - React-Core
   - RNLocalize (2.1.7):
     - React-Core
   - RNReanimated (2.3.1):
@@ -486,6 +490,7 @@ DEPENDENCIES:
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
   - EXKeepAwake (from `../node_modules/expo-keep-awake/ios`)
+  - EXLocalAuthentication (from `../node_modules/expo-local-authentication/ios`)
   - Expo (from `../node_modules/expo/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
@@ -547,6 +552,7 @@ DEPENDENCIES:
   - rn-fetch-blob (from `../node_modules/rn-fetch-blob-v2`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
+  - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -603,6 +609,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-font/ios"
   EXKeepAwake:
     :path: "../node_modules/expo-keep-awake/ios"
+  EXLocalAuthentication:
+    :path: "../node_modules/expo-local-authentication/ios"
   Expo:
     :path: "../node_modules/expo/ios"
   ExpoModulesCore:
@@ -679,6 +687,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCClipboard:
     :path: "../node_modules/@react-native-clipboard/clipboard"
+  RNKeychain:
+    :path: "../node_modules/react-native-keychain"
   RNLocalize:
     :path: "../node_modules/react-native-localize"
   RNReanimated:
@@ -706,6 +716,7 @@ SPEC CHECKSUMS:
   EXFileSystem: e8013deaa114cab168a6f53be956b9334c3d02cf
   EXFont: 1fb13af43dc517c01c0ff21a6e32f9f9bf2ea602
   EXKeepAwake: b571c2ad8323b2fced6e907766e2549f75119471
+  EXLocalAuthentication: 3c5f368ee954b79c3778158eb8000cbce4e2f8a2
   Expo: 337c72b7e9314e93023af79c875930db8e008275
   ExpoModulesCore: 64abda7af7cf659d2fa092934e29c6f4ea7e849f
   FBLazyVector: e5569e42a1c79ca00521846c223173a57aca1fe1
@@ -769,6 +780,7 @@ SPEC CHECKSUMS:
   rn-fetch-blob: 43401673013a116025c43538992cd2b783d3cabd
   RNCAsyncStorage: 0bef6a21517c0254bd6bd59a3672963abfa0d18e
   RNCClipboard: cc054ad1e8a33d2a74cd13e565588b4ca928d8fd
+  RNKeychain: 4f63aada75ebafd26f4bc2c670199461eab85d94
   RNLocalize: f567ea0e35116a641cdffe6683b0d212d568f32a
   RNReanimated: da3860204e5660c0dd66739936732197d359d753
   RNScreens: 522705f2e5c9d27efb17f24aceb2bf8335bc7b8e

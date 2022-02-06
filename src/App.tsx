@@ -12,6 +12,7 @@ import React from 'react';
 import {Platform, UIManager} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
+import AuthenticationProvider from '@/providers/AuthenticationProvider';
 import {useFlipper} from '@react-navigation/devtools';
 import {
   NavigationContainer,
@@ -55,7 +56,9 @@ const App = () => {
               <NativeBaseProvider theme={theme}>
                 <StatusBar translucent barStyle="light-content" />
                 <NavigationContainer ref={navigationRef} theme={theme}>
-                  <Routes />
+                  <AuthenticationProvider>
+                    <Routes />
+                  </AuthenticationProvider>
                 </NavigationContainer>
               </NativeBaseProvider>
             </SafeAreaProvider>

@@ -8,10 +8,10 @@ import enumToArray from '@/utils/enumToArray';
 
 const initialState: PreferencesState = {
   unit: Units.sats,
-  fiat: 'usd',
   wallets: [],
   generalSettings: {
     faceId: false,
+    balanceCurrency: 'USD',
   },
 };
 

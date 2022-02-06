@@ -21,17 +21,16 @@ export interface Wallets {
 
 export type PreferencesState = {
   readonly unit: Units;
-  readonly fiat: 'usd';
   readonly wallets: Wallets[];
   readonly generalSettings: {
     faceId: boolean;
+    balanceCurrency: string;
   };
 };
 
 export interface PreferencesActions {
   type: PreferencesTypes;
   unit?: PreferencesState['unit'];
-  fiat?: PreferencesState['fiat'];
   wallet?: Wallets;
   generalSettings?: Partial<PreferencesState['generalSettings']>;
 }

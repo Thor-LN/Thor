@@ -12,6 +12,7 @@
     "extract-translations": "i18next"
   },
   "dependencies": {
+    "@haskkor/react-native-pincode": "^1.22.6",
     "@react-native-async-storage/async-storage": "^1.15.15",
     "@react-native-clipboard/clipboard": "^1.8.5",
     "@react-native-community/netinfo": "^7.1.7",
@@ -25,6 +26,7 @@
     "dayjs": "^1.10.7",
     "deepmerge": "^4.2.2",
     "expo": ">=44.0.0-0 <45.0.0",
+    "expo-local-authentication": "^12.1.1",
     "formik": "^2.2.9",
     "i18next": "^21.6.6",
     "lodash": "^4.17.21",
@@ -38,6 +40,7 @@
     "react-native": "0.66.4",
     "react-native-animated-pagination-dot": "^0.3.0",
     "react-native-appstate-hook": "^1.0.6",
+    "react-native-keychain": "^8.0.0",
     "react-native-localize": "^2.1.7",
     "react-native-paper": "^4.11.2",
     "react-native-reanimated": "^2.3.1",

@@ -37,6 +37,8 @@
         <key>NSTemporaryExceptionRequiresForwardSecrecy</key>
         <false/>
     </dict>
+    <key>NSFaceIDUsageDescription</key>
+    <string>$(PRODUCT_NAME) needs to use Face ID/Touch ID to authenticate you</string>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs access to your Camera.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

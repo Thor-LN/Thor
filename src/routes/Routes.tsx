@@ -8,8 +8,8 @@ import {SplashScreen} from '@/components/SplashScreen';
 import {useCanConnect} from '@/hooks/useCanConnect';
 import {useIsSetupCompleted} from '@/hooks/useIsSetupCompleted';
 import {useTheme} from '@/providers/ThemeProvider';
+import SettingsRoutes from '@/routes/subRoutes/SettingsRoutes';
 import Connecting from '@/scenes/Connecting/Connecting';
-import Settings from '@/scenes/Settings/Settings';
 import Wallet from '@/scenes/Wallet/Wallet';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -101,8 +101,8 @@ const Routes = () => {
         />
 
         <Tab.Screen
-          name="Settings"
-          component={Settings}
+          name="SettingsRoutes"
+          component={SettingsRoutes}
           options={{
             tabBarLabel: t('Settings'),
             tabBarIcon: ({color}) => (

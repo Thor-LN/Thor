@@ -19,10 +19,12 @@ class FetcherUtils {
   };
 
   fetcher = async (url: string) => {
+    const isFormedUrl = url.match(/^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/);
+
     const host = this.storage.host;
     const port = this.storage.port;
 
-    const fetchUrl = `${host}:${port}${url}`;
+    const fetchUrl = isFormedUrl ? url : `${host}:${port}${url}`;
     const headers = restUtils.getHeaders();
 
     if (this.useTor) {

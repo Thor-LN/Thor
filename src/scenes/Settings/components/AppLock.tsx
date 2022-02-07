@@ -1,9 +1,10 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 
 import {changeGeneralSettings} from '@/actions/preferencesActions';
 import {useTypedSelector} from '@/hooks/useTypedSelector';
+import {useAuthentication} from '@/providers/AuthenticationProvider';
 import {SettingsRoutesTypes} from '@/routes/types/SettingsRoutesTypes';
 import {
   deleteUserPinCode,
@@ -16,6 +17,7 @@ import {HStack, Switch, Text, useToast, VStack} from 'native-base';
 
 const AppLock = () => {
   const [hasLockEnabled, setHasLockEnabled] = useState<boolean>(false);
+  const {isBiometricsEnrolled} = useAuthentication();
 
   const {t} = useTranslation();
   const navigation =
@@ -89,6 +91,10 @@ const AppLock = () => {
     [dispatch, navigation],
   );
 
+  const canActivateFaceID = useMemo(() => {
+    return hasLockEnabled && isBiometricsEnrolled;
+  }, [isBiometricsEnrolled, hasLockEnabled]);
+
   return (
     <VStack space="md">
       <HStack justifyContent="space-between" alignItems="center">
@@ -100,7 +106,7 @@ const AppLock = () => {
         <Switch
           isChecked={generalSettings.faceId}
           onValueChange={handleSetFaceId}
-          isDisabled={!hasLockEnabled}
+          isDisabled={!canActivateFaceID}
         />
       </HStack>
     </VStack>

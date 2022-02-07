@@ -5,14 +5,18 @@ import PinAuthentication from '@/scenes/Authentication/components/PinAuthenticat
 
 import BiometricAuthentication from './components/BiometricAuthentication';
 
-const Authentication = () => {
+interface AuthenticationsProps {
+  onAuthenticate: () => void;
+}
+
+const Authentication = ({onAuthenticate}: AuthenticationsProps) => {
   const {hasBiometricsSet} = useAuthentication();
 
   if (hasBiometricsSet) {
-    return <BiometricAuthentication />;
+    return <BiometricAuthentication onAuthenticate={onAuthenticate} />;
   }
 
-  return <PinAuthentication />;
+  return <PinAuthentication onAuthenticate={onAuthenticate} />;
 };
 
 export default Authentication;

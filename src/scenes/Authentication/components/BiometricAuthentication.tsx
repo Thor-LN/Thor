@@ -1,21 +1,25 @@
 import React, {useCallback, useEffect} from 'react';
 
-import {useAuthentication} from '@/providers/AuthenticationProvider';
 import {useTheme} from '@/providers/ThemeProvider';
 import {authenticateAsync} from 'expo-local-authentication';
 import {Box} from 'native-base';
 
-const BiometricAuthentication = () => {
-  const {setIsLocked} = useAuthentication();
+interface BiometricAuthenticationProps {
+  onAuthenticate: () => void;
+}
+
+const BiometricAuthentication = ({
+  onAuthenticate,
+}: BiometricAuthenticationProps) => {
   const {theme} = useTheme();
 
   const handleAuthenticate = useCallback(async () => {
     const authentication = await authenticateAsync();
 
     if (authentication.success) {
-      setIsLocked(false);
+      onAuthenticate();
     }
-  }, [setIsLocked]);
+  }, [onAuthenticate]);
 
   useEffect(() => {
     handleAuthenticate();

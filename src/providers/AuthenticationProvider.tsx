@@ -19,6 +19,7 @@ interface AuthenticationContextData {
   hasAuthenticationSet: boolean;
   hasBiometricsSet: boolean;
   isBiometricSupported: boolean;
+  isBiometricsEnrolled: boolean;
 }
 
 const AuthenticationContext = createContext<AuthenticationContextData>({
@@ -26,6 +27,7 @@ const AuthenticationContext = createContext<AuthenticationContextData>({
   hasAuthenticationSet: false,
   hasBiometricsSet: false,
   isBiometricSupported: false,
+  isBiometricsEnrolled: false,
 });
 
 export const useAuthentication = (): AuthenticationContextData => {
@@ -41,11 +43,15 @@ export const useAuthentication = (): AuthenticationContextData => {
 };
 
 const AuthenticationProvider: React.FC = ({children}) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasAuthenticationSet, setHasAuthenticationSet] = useState(false);
-  const [isBiometricSupported, setIsBiometricSupported] = React.useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [hasAuthenticationSet, setHasAuthenticationSet] =
+    useState<boolean>(false);
+  const [isBiometricSupported, setIsBiometricSupported] =
+    useState<boolean>(false);
   const [hasBiometricsSet, setHasBiometricsSet] = useState<boolean>(false);
-  const [isLocked, setIsLocked] = useState(true);
+  const [isBiometricsEnrolled, setIsBiometricsEnrolled] =
+    useState<boolean>(false);
+  const [isLocked, setIsLocked] = useState<boolean>(true);
   const {generalSettings} = useTypedSelector(state => state.preferences);
 
   // verify the state of the authentication
@@ -54,6 +60,8 @@ const AuthenticationProvider: React.FC = ({children}) => {
       const authentication = await hasUserSetPinCode();
       const isBiometricsCompatible = await hasHardwareAsync();
       const biometrics = await isEnrolledAsync();
+      setIsBiometricsEnrolled(biometrics);
+
       const biometricsEnabled = generalSettings.faceId;
 
       setIsBiometricSupported(isBiometricsCompatible);
@@ -90,8 +98,14 @@ const AuthenticationProvider: React.FC = ({children}) => {
       hasAuthenticationSet,
       hasBiometricsSet,
       isBiometricSupported,
+      isBiometricsEnrolled,
     }),
-    [hasAuthenticationSet, hasBiometricsSet, isBiometricSupported],
+    [
+      hasAuthenticationSet,
+      hasBiometricsSet,
+      isBiometricSupported,
+      isBiometricsEnrolled,
+    ],
   );
 
   const shouldShowAuthentication = useMemo(() => {
@@ -102,13 +116,21 @@ const AuthenticationProvider: React.FC = ({children}) => {
     return hasAuthenticationSet && isLocked;
   }, [hasAuthenticationSet, isLocked]);
 
+  const handleAppUnlock = useCallback(() => {
+    setIsLocked(false);
+  }, []);
+
   if (isLoading) {
     return <Loading full />;
   }
 
   return (
     <AuthenticationContext.Provider value={contextData}>
-      {shouldShowAuthentication ? <Authentication /> : children}
+      {shouldShowAuthentication ? (
+        <Authentication onAuthenticate={handleAppUnlock} />
+      ) : (
+        children
+      )}
     </AuthenticationContext.Provider>
   );
 };

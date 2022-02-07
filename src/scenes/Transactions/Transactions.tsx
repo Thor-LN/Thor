@@ -1,15 +1,16 @@
 import React, {useCallback, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {RefreshControl} from 'react-native';
+import {RefreshControl, StyleSheet} from 'react-native';
 
 import {Card} from '@/components/Card';
 import {Currency} from '@/components/Currency';
 import {Loading} from '@/components/Loading';
 import {useGetTransactions} from '@/hooks/api/useGetTransactions';
 import {useTheme} from '@/providers/ThemeProvider';
+import EmptyList from '@/scenes/Transactions/components/EmptyList';
 import {GetTransactions} from '@/types/GetTransactionsResponse';
 import dayjs from 'dayjs';
-import {Box, FlatList, Heading, HStack, Text, VStack} from 'native-base';
+import {FlatList, Heading, HStack, Text, VStack} from 'native-base';
 
 const Transactions = () => {
   const {t} = useTranslation();
@@ -43,9 +44,10 @@ const Transactions = () => {
   }
 
   return (
-    <Box flex={1} safeAreaTop px={2}>
+    <VStack flex={1} safeAreaTop px={2} space="md">
       <Heading>{t('Transactions')}</Heading>
       <FlatList
+        contentContainerStyle={styles.listViewContainer}
         refreshControl={
           <RefreshControl
             refreshing={isManualRefresh}
@@ -55,6 +57,7 @@ const Transactions = () => {
           />
         }
         data={transactions}
+        ListEmptyComponent={<EmptyList />}
         renderItem={({item}) => (
           <Card p={2} my={2}>
             <VStack space="2xs">
@@ -72,8 +75,14 @@ const Transactions = () => {
           </Card>
         )}
       />
-    </Box>
+    </VStack>
   );
 };
+
+const styles = StyleSheet.create({
+  listViewContainer: {
+    flex: 1,
+  },
+});
 
 export default Transactions;

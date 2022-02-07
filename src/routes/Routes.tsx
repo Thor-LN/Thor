@@ -3,12 +3,14 @@ import {useTranslation} from 'react-i18next';
 import {LayoutAnimation} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 
+import Transaction from '@/assets/svg/transaction.svg';
 import {Fab} from '@/components/Fab';
 import {SplashScreen} from '@/components/SplashScreen';
 import {useCanConnect} from '@/hooks/useCanConnect';
 import {useIsSetupCompleted} from '@/hooks/useIsSetupCompleted';
 import {useTheme} from '@/providers/ThemeProvider';
 import SettingsRoutes from '@/routes/subRoutes/SettingsRoutes';
+import TransactionsRoutes from '@/routes/subRoutes/TransactionsRoutes';
 import Connecting from '@/scenes/Connecting/Connecting';
 import Wallet from '@/scenes/Wallet/Wallet';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
@@ -96,6 +98,17 @@ const Routes = () => {
             tabBarLabel: t('Wallet'),
             tabBarIcon: ({color}) => (
               <Entypo name="wallet" color={color} size={16} />
+            ),
+          }}
+        />
+
+        <Tab.Screen
+          name="TransactionsRoutes"
+          component={TransactionsRoutes}
+          options={{
+            tabBarLabel: t('Transactions'),
+            tabBarIcon: ({color}) => (
+              <Transaction width={16} height={16} fill={color} />
             ),
           }}
         />

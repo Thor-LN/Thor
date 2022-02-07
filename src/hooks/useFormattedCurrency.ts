@@ -39,7 +39,9 @@ export const useFormattedCurrency = () => {
           }).format();
 
         case Units.fiat:
-          return CurrencyFunc(amount)
+          return CurrencyFunc(amount, {
+            symbol: `${balanceCurrency.toUpperCase()} `,
+          })
             .multiply(price)
             .divide(10 ** 8)
             .format();
@@ -47,11 +49,12 @@ export const useFormattedCurrency = () => {
         default:
           return CurrencyFunc(amount, {
             symbol: 'sats',
+            negativePattern: '-# !',
             pattern: '# !',
             precision: 0,
           }).format();
       }
     },
-    [price, unit],
+    [balanceCurrency, price, unit],
   );
 };

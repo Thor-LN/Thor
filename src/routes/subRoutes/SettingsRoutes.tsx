@@ -9,17 +9,11 @@ const Stack = createNativeStackNavigator<SettingsRoutesTypes>();
 
 const SettingsRoutes = () => {
   return (
-    <Stack.Navigator initialRouteName="Settings">
-      <Stack.Screen
-        name="Settings"
-        component={Settings}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="PinCodeSet"
-        component={PinCodeSet}
-        options={{headerShown: false}}
-      />
+    <Stack.Navigator
+      initialRouteName="Settings"
+      screenOptions={{headerShown: false}}>
+      <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen name="PinCodeSet" component={PinCodeSet} />
     </Stack.Navigator>
   );
 };

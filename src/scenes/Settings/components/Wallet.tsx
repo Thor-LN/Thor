@@ -30,7 +30,7 @@ const Wallet = ({wallet}: WalletProps) => {
 
   return (
     <Pressable onPress={handleSelectWallet}>
-      <Card>
+      <Card h={10}>
         <HStack
           alignItems="center"
           justifyContent="space-between"

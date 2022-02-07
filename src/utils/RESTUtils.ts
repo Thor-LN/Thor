@@ -36,6 +36,7 @@ class RESTUtils {
   getBlockchainBalance = () => this.getClass().getBlockchainBalance();
   getChannelsBalance = () => this.getClass().getChannelsBalance();
   getInfo = () => this.getClass().getInfo();
+  getTransactions = () => this.getClass().getTransactions();
 
   testConnection = () => this.getClass().testConnection();
 }

@@ -7,6 +7,7 @@ import Animated, {
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
+import {useNavigation} from '@react-navigation/native';
 import {
   AddIcon,
   Box,
@@ -21,6 +22,7 @@ MaterialIcons.loadFont();
 Feather.loadFont();
 
 const Fab = () => {
+  const navigation = useNavigation();
   const {isOpen, onToggle} = useDisclose();
 
   const rotation = useSharedValue(0);
@@ -35,6 +37,14 @@ const Fab = () => {
     onToggle();
     rotation.value = withSpring(isOpen ? 0 : 180);
   }, [isOpen, onToggle, rotation]);
+
+  const handleNavigate = useCallback(
+    (screen: string) => () => {
+      navigation.navigate(screen as any);
+      handleToggle();
+    },
+    [handleToggle, navigation],
+  );
 
   return (
     <Box position="absolute" bottom={20} right={5}>
@@ -72,6 +82,7 @@ const Fab = () => {
             },
           }}>
           <IconButton
+            onPress={handleNavigate('Transactions')}
             mb="4"
             variant="solid"
             bg="green.500"

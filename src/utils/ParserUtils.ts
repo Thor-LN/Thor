@@ -10,6 +10,10 @@ import {
   GetInfoTransformation,
   LNDGetInfoResponse,
 } from '@/types/GetInfoResponse';
+import {
+  GetTransactionsTransformation,
+  LNDGetTransactionsResponse,
+} from '@/types/GetTransactionsResponse';
 import Currency from '@/utils/currency';
 import restUtils from '@/utils/RESTUtils';
 
@@ -64,6 +68,23 @@ class ParserUtils {
           testnet: data.testnet,
           uris: data.uris,
         };
+    }
+  };
+
+  getTransactions = (
+    data: LNDGetTransactionsResponse,
+  ): GetTransactionsTransformation => {
+    switch (this.implementation) {
+      default:
+        return data.transactions.map(tx => ({
+          address: tx.dest_addresses[0],
+          txHash: tx.tx_hash,
+          amount: tx.amount,
+          numConfirmations: tx.num_confirmations,
+          timeStamp: tx.time_stamp,
+          totalFees: tx.total_fees,
+          label: tx.label,
+        }));
     }
   };
 }

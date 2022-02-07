@@ -1,6 +1,7 @@
 export enum PreferencesTypes {
   ADD_WALLET = '@preferences/ADD_WALLET',
   TOGGLE_CURRENCY_UNITS = '@preferences/TOGGLE_CURRENCY_UNITS',
+  CHANGE_GENERAL_SETTINGS = '@preferences/CHANGE_GENERAL_SETTINGS',
 }
 
 export enum Units {
@@ -20,13 +21,16 @@ export interface Wallets {
 
 export type PreferencesState = {
   readonly unit: Units;
-  readonly fiat: 'usd';
   readonly wallets: Wallets[];
+  readonly generalSettings: {
+    faceId: boolean;
+    balanceCurrency: string;
+  };
 };
 
 export interface PreferencesActions {
   type: PreferencesTypes;
   unit?: PreferencesState['unit'];
-  fiat?: PreferencesState['fiat'];
   wallet?: Wallets;
+  generalSettings?: Partial<PreferencesState['generalSettings']>;
 }

@@ -1,4 +1,8 @@
-import {PreferencesTypes, Wallets} from '@/reducers/preferencesReducer/types';
+import {
+  PreferencesTypes,
+  Wallets,
+  PreferencesActions,
+} from '@/reducers/preferencesReducer/types';
 import {Dispatch} from 'redux';
 
 export const toggleUnits =
@@ -15,5 +19,14 @@ export const addWallet =
     dispatch({
       type: PreferencesTypes.ADD_WALLET,
       wallet,
+    });
+  };
+
+export const changeGeneralSettings =
+  (generalSettings: PreferencesActions['generalSettings']) =>
+  (dispatch: Dispatch) => {
+    dispatch({
+      type: PreferencesTypes.CHANGE_GENERAL_SETTINGS,
+      generalSettings,
     });
   };
